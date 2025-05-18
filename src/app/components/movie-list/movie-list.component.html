@@ -1,0 +1,4 @@
+<input type="text" [(ngModel)]="searchTerm" placeholder="Пошук фільму" />
+<div class="movie-list">
+  <app-movie-card *ngFor="let movie of filteredMovies" [movie]="movie"></app-movie-card>
+</div>

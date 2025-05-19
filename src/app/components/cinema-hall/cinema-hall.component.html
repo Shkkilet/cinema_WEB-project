@@ -1,4 +1,4 @@
-<div class="hall">
+<!-- <div class="hall">
   <div class="row" *ngFor="let row of seats">
     <div
       class="seat"
@@ -15,5 +15,17 @@
   <h3>Вибрані місця:</h3>
   <div *ngFor="let seat of getSelectedSeats()">
     Ряд {{ seat.row + 1 }}, Місце {{ seat.col + 1 }}
+  </div>
+</div> -->
+
+<div class="hall">
+  <div
+    *ngFor="let seat of seats"
+    [class.booked]="isBooked(seat)"
+    [class.selected]="isSelected(seat)"
+    (click)="toggleSeat(seat)"
+    class="seat"
+  >
+    {{ seat }}
   </div>
 </div>

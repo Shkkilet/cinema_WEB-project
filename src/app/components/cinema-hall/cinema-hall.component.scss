@@ -28,3 +28,31 @@
   background-color: #6c757d; 
   cursor: not-allowed;
 }
+
+.hall {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  max-width: 300px;
+}
+
+.seat {
+  width: 40px;
+  height: 40px;
+  background-color: green;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.seat.booked {
+  background-color: red;
+  cursor: not-allowed;
+}
+
+.seat.selected {
+  background-color: blue;
+}

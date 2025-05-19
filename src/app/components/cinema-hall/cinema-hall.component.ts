@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Seat } from '../../data/seat';
+import { BookingService } from '../../services/booking.service';
 @Component({
   selector: 'app-cinema-hall',
   imports: [CommonModule],
@@ -8,39 +9,32 @@ import { Seat } from '../../data/seat';
   styleUrl: './cinema-hall.component.scss'
 })
 export class CinemaHallComponent implements OnInit{
-  @Input() rows: number = 5;
-  @Input() cols: number = 8;
+  @Input() movieId!: number;
+  seats: number[] = Array.from({ length: 30 }, (_, i) => i + 1);
+  bookedSeats: number[] = [];
+  selectedSeats: number[] = [];
 
-    @Output() selectedSeatsChange = new EventEmitter<Seat[]>();
+  constructor(private bookingService: BookingService) {}
 
-  seats: Seat[][] = [];
-
-    ngOnInit() {
-    this.generateSeats();
+  ngOnInit(): void {
+    this.bookedSeats = this.bookingService.getBookings(this.movieId);
   }
-  generateSeats() {
-    this.seats = [];
-    for (let row = 0; row < this.rows; row++) {
-      const seatRow: Seat[] = [];
-      for (let col = 0; col < this.cols; col++) {
-        seatRow.push({
-          row,
-          col,
-          reserved: Math.random() < 0.2, // 20% уже заброньовано
-          selected: false
-        });
-      }
-      this.seats.push(seatRow);
+
+  toggleSeat(seat: number): void {
+    if (this.bookedSeats.includes(seat)) return;
+
+    if (this.selectedSeats.includes(seat)) {
+      this.selectedSeats = this.selectedSeats.filter(s => s !== seat);
+    } else {
+      this.selectedSeats.push(seat);
     }
   }
 
-  toggleSeat(seat: Seat) {
-    if (seat.reserved) return;
-    seat.selected = !seat.selected;
-    this.selectedSeatsChange.emit(this.getSelectedSeats());
+  isBooked(seat: number): boolean {
+    return this.bookedSeats.includes(seat);
   }
 
-  getSelectedSeats(): Seat[] {
-    return this.seats.flat().filter(seat => seat.selected);
+  isSelected(seat: number): boolean {
+    return this.selectedSeats.includes(seat);
   }
   }

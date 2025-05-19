@@ -1,0 +1,11 @@
+<h2>Бронювання для фільму з ID: {{ movieId }}</h2>
+<app-cinema-hall (selectedSeatsChange)="onSelectedSeatsChange($event)"></app-cinema-hall>
+
+<div *ngIf="selectedSeats.length > 0">
+  <h3>Обрані місця:</h3>
+  <ul>
+    <li *ngFor="let seat of selectedSeats">
+      Ряд {{ seat.row + 1 }}, Місце {{ seat.col + 1 }}
+    </li>
+  </ul>
+</div>

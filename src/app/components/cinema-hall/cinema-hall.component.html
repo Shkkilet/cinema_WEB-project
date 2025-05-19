@@ -1,0 +1,19 @@
+<div class="hall">
+  <div class="row" *ngFor="let row of seats">
+    <div
+      class="seat"
+      *ngFor="let seat of row"
+      [ngClass]="{
+        reserved: seat.reserved,
+        selected: seat.selected
+      }"
+      (click)="toggleSeat(seat)">
+    </div>
+  </div>
+</div>
+<div class="selected-list">
+  <h3>Вибрані місця:</h3>
+  <div *ngFor="let seat of getSelectedSeats()">
+    Ряд {{ seat.row + 1 }}, Місце {{ seat.col + 1 }}
+  </div>
+</div>
